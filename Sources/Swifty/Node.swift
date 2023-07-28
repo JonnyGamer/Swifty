@@ -104,7 +104,9 @@ public class Text: Textable {
         node = SKLabelNode.init(text: text.joined(separator: "\n"))
         node.fontName = "Helvetica"
         node.fontColor = .white
-        node.numberOfLines = -1
+        if #available(macOS 10.13, *) {
+            node.numberOfLines = -1
+        }
     }
     
     private init(_ node: SKLabelNode) { self.node = node }

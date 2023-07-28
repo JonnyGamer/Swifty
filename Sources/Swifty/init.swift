@@ -9,10 +9,16 @@ import SwiftUI
 import SpriteKit
 
 public struct Build: View {
+    @available(macOS 10.15.0, *)
     public var body: some View {
         let o = RootScene.init(size: CGSize.init(width: 1600, height: 1000))
         o.scaleMode = .aspectFit
-        return SpriteView.init(scene: o)
+        if #available(macOS 11.0, *) {
+            return SpriteView.init(scene: o)
+        } else {
+            // Fallback on earlier versions
+            fatalError("Upgrade to MacOS 11 for the SpriteView object")
+        }
     }
     init(_ n: Scene) {
         currentScene = n
@@ -29,7 +35,10 @@ public class Options {
 public class RootScene: SKScene, SKPhysicsContactDelegate {
     
     var curr: SceneHost!
+    
+    @available(macOS 10.11, *)
     var magicCamera = SKCameraNode()
+    
     var followingNode: SKNode?
     
     public override func didMove(to view: SKView) {
@@ -38,7 +47,9 @@ public class RootScene: SKScene, SKPhysicsContactDelegate {
         presentScene(currentScene)
         
         addChild(magicCamera)
-        self.camera = magicCamera
+        if #available(macOS 10.11, *) {
+            self.camera = magicCamera
+        }
     }
     
     public override func update(_ currentTime: TimeInterval) {
