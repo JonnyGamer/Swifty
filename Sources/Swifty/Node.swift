@@ -53,7 +53,7 @@ public class Node: Nodable, Then {
     
     public init() {}
     fileprivate init(_ node: SKNode) { self.node = node }
-    var copy: Node {
+    public var copy: Node {
         Node.init(node.copied)
     }
 }
@@ -71,7 +71,7 @@ public class PhysicsNode: Node, Physical {
     }
     
     private init(_ node: SKNode,_ physics: SKPhysicsBody) { super.init(node); self.__physicsBody__ = physics }
-    override var copy: PhysicsNode {
+    override public var copy: PhysicsNode {
         PhysicsNode.init(node.copied, __physicsBody__.copied)
     }
 }
@@ -110,26 +110,26 @@ public class Text: Textable {
     }
     
     private init(_ node: SKLabelNode) { self.node = node }
-    var copy: Text {
+    public var copy: Text {
         Text.init(node.copied)
     }
     
-    func alignedTop() {
+    public func alignedTop() {
         node.verticalAlignmentMode = .top
     }
-    func alignedBottom() {
+    public func alignedBottom() {
         node.verticalAlignmentMode = .bottom
     }
-    func alignedLeft() {
+    public func alignedLeft() {
         node.horizontalAlignmentMode = .left
     }
-    func alignedRight() {
+    public func alignedRight() {
         node.horizontalAlignmentMode = .right
     }
-    func alignedCenterHorizontally() {
+    public func alignedCenterHorizontally() {
         node.horizontalAlignmentMode = .center
     }
-    func alignedCenterVertically() {
+    public func alignedCenterVertically() {
         node.verticalAlignmentMode = .center
     }
 }
@@ -167,7 +167,7 @@ public class Box: Rectanglable {
     }
     
     fileprivate init(_ node: SKSpriteNode) { self.node = node }
-    var copy: Box {
+    public var copy: Box {
         Box.init(node.copied)
     }
 }
@@ -185,7 +185,7 @@ public class PhysicsBox: Box, Physical {
         airFriction = 0
     }
     private init(_ node: SKSpriteNode,_ physics: SKPhysicsBody) { super.init(node); self.__physicsBody__ = physics }
-    override var copy: PhysicsBox {
+    override public var copy: PhysicsBox {
         PhysicsBox.init(node.copied, __physicsBody__.copied)
     }
 }
@@ -214,12 +214,12 @@ public class Image: Imagable {
             }
         }
     }
-    var colorPercentage: Int {
+    public var colorPercentage: Int {
         get { Int(__sprite__.colorBlendFactor * 100) }
         set { __sprite__.colorBlendFactor = CGFloat(newValue) }
     }
     fileprivate init(_ node: SKSpriteNode,_ named: String) { self.node = node; self._imageName_ = named }
-    var copy: Image {
+    public var copy: Image {
         Image.init(node.copied, _imageName_)
     }
 }
@@ -237,7 +237,7 @@ public class PhysicsImage: Image, Physical {
         airFriction = 0
     }
     private init(_ node: SKSpriteNode,_ physics: SKPhysicsBody,_ named: String) { super.init(node, named); self.__physicsBody__ = physics }
-    override var copy: PhysicsImage {
+    override public var copy: PhysicsImage {
         PhysicsImage.init(node.copied, __physicsBody__.copied, _imageName_)
     }
 }
