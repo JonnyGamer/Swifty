@@ -8,8 +8,8 @@
 import SwiftUI
 import SpriteKit
 
+@available(macOS 10.15, *)
 public struct Build: View {
-    @available(macOS 10.15.0, *)
     public var body: some View {
         let o = RootScene.init(size: CGSize.init(width: 1600, height: 1000))
         o.scaleMode = .aspectFit
@@ -25,18 +25,20 @@ public struct Build: View {
     }
 }
 
+@available(macOS 10.11, *)
 public var trueScene: RootScene!
+@available(macOS 10.11, *)
 public var currentScene: Scene!
 
 public class Options {
     static var cameraTrackingDelay: Double = 0.1
 }
 
+@available(macOS 10.11, *)
 public class RootScene: SKScene, SKPhysicsContactDelegate {
     
     var curr: SceneHost!
     
-    @available(macOS 10.11, *)
     var magicCamera = SKCameraNode()
     
     var followingNode: SKNode?
@@ -47,9 +49,7 @@ public class RootScene: SKScene, SKPhysicsContactDelegate {
         presentScene(currentScene)
         
         addChild(magicCamera)
-        if #available(macOS 10.11, *) {
-            self.camera = magicCamera
-        }
+        self.camera = magicCamera
     }
     
     public override func update(_ currentTime: TimeInterval) {
@@ -96,7 +96,7 @@ public class RootScene: SKScene, SKPhysicsContactDelegate {
         addChild(curr)
     }
 }
-
+@available(macOS 10.11, *)
 class SceneHost: SKNode {
     var curr: Scene
     init(hosting: Scene) {
@@ -108,7 +108,7 @@ class SceneHost: SKNode {
     }
 }
 
-
+@available(macOS 10.11, *)
 @objc public protocol Scene {
     @objc optional func began()
     @objc optional func update()
@@ -116,12 +116,13 @@ class SceneHost: SKNode {
     @objc optional func keyReleased(key: Key)
     @objc optional func collision()
 }
+@available(macOS 10.11, *)
 extension Scene {
     func presentScene<T: Scene>(_ someScene: T) {
         trueScene.presentScene(someScene)
     }
 }
-
+@available(macOS 10.11, *)
 extension Scene {
     var keysPressed: [Key] { return trueScene.keysPressed }
     func add<T: Nodable>(_ child: T) {
