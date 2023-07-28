@@ -51,7 +51,7 @@ public class Node: Nodable, Then {
     fileprivate var node: SKNode = SKNode()
     public var __node__: SKNode { return node }
     
-    init() {}
+    public init() {}
     fileprivate init(_ node: SKNode) { self.node = node }
     var copy: Node {
         Node.init(node.copied)
@@ -59,7 +59,7 @@ public class Node: Nodable, Then {
 }
 public class PhysicsNode: Node, Physical {
     public var __physicsBody__: SKPhysicsBody = SKPhysicsBody()
-    override init() {
+    public override init() {
         super.init()
         addPhysics()
         __physicsBody__.contactTestBitMask = .max
@@ -100,7 +100,7 @@ public class Text: Textable {
     private var node: SKLabelNode
     public var __node__: SKNode { return node }
     public var __text__: SKLabelNode { return node }
-    init(_ text: String...) {
+    public init(_ text: String...) {
         node = SKLabelNode.init(text: text.joined(separator: "\n"))
         node.fontName = "Helvetica"
         node.fontColor = .white
@@ -162,7 +162,7 @@ public class Box: Rectanglable {
     fileprivate var node: SKSpriteNode
     public var __node__: SKNode { return node }
     public var __sprite__: SKSpriteNode { return node }
-    init(width: Int, height: Int) {
+    public init(width: Int, height: Int) {
         self.node = SKSpriteNode.init(color: .white, size: CGSize.init(width: width, height: height))
     }
     
@@ -173,7 +173,7 @@ public class Box: Rectanglable {
 }
 public class PhysicsBox: Box, Physical {
     public var __physicsBody__: SKPhysicsBody = SKPhysicsBody()
-    override init(width: Int, height: Int) {
+    public override init(width: Int, height: Int) {
         super.init(width: width, height: height)
         self.__physicsBody__ = SKPhysicsBody.init(rectangleOf: CGSize.init(width: width, height: height))
         addPhysics()
@@ -199,7 +199,7 @@ public class Image: Imagable {
     fileprivate var node: SKSpriteNode
     public var __node__: SKNode { return node }
     public var __sprite__: SKSpriteNode { return node }
-    init(named: String) {
+    public init(named: String) {
         let n = SKSpriteNode.init(imageNamed: named)
         node = n
         _imageName_ = named
@@ -225,7 +225,7 @@ public class Image: Imagable {
 }
 public class PhysicsImage: Image, Physical {
     public var __physicsBody__: SKPhysicsBody = SKPhysicsBody()
-    override init(named: String) {
+    public override init(named: String) {
         super.init(named: named)
         self.__physicsBody__ = SKPhysicsBody.init(rectangleOf: __sprite__.size)
         addPhysics()
