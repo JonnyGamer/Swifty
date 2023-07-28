@@ -20,7 +20,7 @@ public struct Build: View {
             fatalError("Upgrade to MacOS 11 for the SpriteView object")
         }
     }
-    init(_ n: Scene) {
+    public init(_ n: Scene) {
         currentScene = n
     }
 }
@@ -37,11 +37,11 @@ public class Options {
 @available(macOS 10.11, *)
 public class RootScene: SKScene, SKPhysicsContactDelegate {
     
-    var curr: SceneHost!
+    public var curr: SceneHost!
     
-    var magicCamera = SKCameraNode()
+    public var magicCamera = SKCameraNode()
     
-    var followingNode: SKNode?
+    public var followingNode: SKNode?
     
     public override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
@@ -59,7 +59,7 @@ public class RootScene: SKScene, SKPhysicsContactDelegate {
         curr.curr.update?()
     }
     
-    var keysPressed: [Key] = []
+    public var keysPressed: [Key] = []
     public override func keyDown(with event: NSEvent) {
         if event.isARepeat { return }
         let key = Key.init(rawValue: event.keyCode) ?? .unknown
@@ -88,7 +88,7 @@ public class RootScene: SKScene, SKPhysicsContactDelegate {
         curr.curr.collision?()
     }
     
-    func presentScene<T: Scene>(_ someScene: T) {
+    public func presentScene<T: Scene>(_ someScene: T) {
         curr?.removeFromParent()
         keysPressed = []
         curr = SceneHost.init(hosting: someScene)
@@ -97,9 +97,9 @@ public class RootScene: SKScene, SKPhysicsContactDelegate {
     }
 }
 @available(macOS 10.11, *)
-class SceneHost: SKNode {
-    var curr: Scene
-    init(hosting: Scene) {
+public class SceneHost: SKNode {
+    public var curr: Scene
+    public init(hosting: Scene) {
         self.curr = hosting
         super.init()
     }
@@ -117,13 +117,13 @@ class SceneHost: SKNode {
     @objc optional func collision()
 }
 @available(macOS 10.11, *)
-extension Scene {
+public extension Scene {
     func presentScene<T: Scene>(_ someScene: T) {
         trueScene.presentScene(someScene)
     }
 }
 @available(macOS 10.11, *)
-extension Scene {
+public extension Scene {
     var keysPressed: [Key] { return trueScene.keysPressed }
     func add<T: Nodable>(_ child: T) {
         if child.__node__.parent != nil {

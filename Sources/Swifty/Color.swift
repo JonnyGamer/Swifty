@@ -43,30 +43,30 @@ typealias NSColor = UIColor
 
 
 public struct Color {
-    var red: UInt8
-    var green: UInt8
-    var blue: UInt8
+    public var red: UInt8
+    public var green: UInt8
+    public var blue: UInt8
     
-    var nsColor: NSColor { return .init(r: red, g: green, b: blue) }
+    public var nsColor: NSColor { return .init(r: red, g: green, b: blue) }
     
-    init(r: UInt8, g: UInt8, b: UInt8) {
+    public init(r: UInt8, g: UInt8, b: UInt8) {
         (self.red, self.green, self.blue) = (r, g, b)
     }
-    init(hex: String) {
+    public init(hex: String) {
         (red, green, blue) = hex.color
     }
     
-    static var black: Self { Color.init(hex: "000000") }
-    static var blue: Self { Color.init(hex: "c0d8da") }
-    static var darkBlue: Self { Color.init(hex: "8aabb0") }
-    static var lightGray: Self { Color.init(hex: "cecece") }
-    static var darkGray: Self { Color.init(hex: "848484") }
-    static var orange: Self { Color.init(hex: "e9c1a7") }
-    static var green: Self { Color.init(hex: "9bb085") }
-    static var darkYellow: Self { Color.init(hex: "b89c5d") }
-    static var purple: Self { Color.init(hex: "885ca7") }
-    static var white: Self { Color.init(hex: "ffffff") }
-    static var redSelection: Self { Color.init(hex: "ff8888") }
+    public static var black: Self { Color.init(hex: "000000") }
+    public static var blue: Self { Color.init(hex: "c0d8da") }
+    public static var darkBlue: Self { Color.init(hex: "8aabb0") }
+    public static var lightGray: Self { Color.init(hex: "cecece") }
+    public static var darkGray: Self { Color.init(hex: "848484") }
+    public static var orange: Self { Color.init(hex: "e9c1a7") }
+    public static var green: Self { Color.init(hex: "9bb085") }
+    public static var darkYellow: Self { Color.init(hex: "b89c5d") }
+    public static var purple: Self { Color.init(hex: "885ca7") }
+    public static var white: Self { Color.init(hex: "ffffff") }
+    public static var redSelection: Self { Color.init(hex: "ff8888") }
 }
 
 //
