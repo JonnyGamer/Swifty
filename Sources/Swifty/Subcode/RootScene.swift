@@ -200,7 +200,7 @@ public extension Scene {
 
 public extension Scene {
     var keysPressed: [Key] { return trueScene.keysPressed }
-    func add<T: Node>(_ child: T) {
+    func add(_ child: Node) { // <T: Node>
         if child.__node__.parent != nil {
             print("Warning: Attempting to add a child which already has a parent.")
             return

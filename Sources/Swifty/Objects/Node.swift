@@ -37,6 +37,7 @@ public class Node: JSON, Nodable, Constructable, Equatable {
     public var angle: Double { get { _angle } set { _angle = newValue } }
     public var name: String { get { _name } set { _name = newValue } }
     public var children: [Node] { _children }
+    public var parent: Node? { _parent }
     public func remove() { _remove() }
     public func deallocate() { _deallocate() }
     
@@ -80,7 +81,7 @@ public class Node: JSON, Nodable, Constructable, Equatable {
 extension Node {
     
     /// Add a child node.
-    public func add<T: Node>(_ child: T...) {
+    public func add(_ child: Node...) { // <T: Node>
         for child in child {
             if _deallocated { print("Warning: Attempting to add a node you deallocated"); return }
             if child.__node__.parent != nil {
@@ -94,7 +95,7 @@ extension Node {
     }
     
     /// Move a node to a new parent.
-    public func moveTo<T: Node>(_ toNewParent: T) {
+    public func moveTo(_ toNewParent: Node) { // <T: Node>
         //guard let pID = parent?.id else { print("Warning: Node does not have a parent yet lol"); return }
         if __node__.parent == nil { print("Warning: Node does not have a parent yet lol"); return }
         if let pID = parent?.id, Everything.getNode(key: pID) === toNewParent { print("Warning: Moving a node to it's own parent."); return }

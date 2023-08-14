@@ -51,7 +51,7 @@ extension Nodable {
     var id: Int {
         get { ID!.value }
     }
-    public var parent: Node? {
+    var _parent: Node? {
         guard let _pID = _parentID else { return nil }
         return Everything.getNode(key: _pID.value)
     }
@@ -89,7 +89,7 @@ extension Nodable {
     /// This method should be private.
     func _removeIDFromParent() {
         // Remove this node's id from it's parent's children id list
-        parent?._childrenIDs.remove(ID)
+        _parent?._childrenIDs.remove(ID)
         _parentID = nil
 //        if let pID = parentID?.value {
 //            Everything._nodes[pID]?._childrenIDs.remove(ID!)
