@@ -140,9 +140,9 @@ extension Node {
         return copiedSelf
     }
     
-//    var stamp: StampedImage {
-//        StampedImage.init(stamp: self)
-//    }
+    public var stamp: StampedImage {
+        StampedImage.init(stamp: self)
+    }
     
     func allChildrenRecursive() -> [Node] {
         return children + children.map({ $0.allChildrenRecursive() }).flatMap { $0 }

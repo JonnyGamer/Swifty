@@ -81,8 +81,8 @@ struct Everything {
 }
 
 enum Types: String, JSONEnum {
-    case Node, Box//, Text, Image, StampedImage, Circle, Shape
-    case PhysicsNode//, PhysicsBox, PhysicsImage, PhysicsCircle, PhysicsShape
+    case Node, Box, Text, Image, StampedImage, Circle, Shape
+    case PhysicsNode, PhysicsBox, PhysicsImage, PhysicsCircle, PhysicsShape
 }
 
 protocol Constructable {
@@ -112,15 +112,15 @@ class Container: JSON, Equatable {
         case .Node: self.object = try container.decode(Node.self, forKey: .object)
         case .PhysicsNode: self.object = try container.decode(PhysicsNode.self, forKey: .object)
         case .Box: self.object = try container.decode(Box.self, forKey: .object)
-//        case .PhysicsBox: self.object = try container.decode(PhysicsBox.self, forKey: .object)
-//        case .Text: self.object = try container.decode(Text.self, forKey: .object)
-//        case .Image: self.object = try container.decode(Image.self, forKey: .object)
-//        case .PhysicsImage: self.object = try container.decode(PhysicsImage.self, forKey: .object)
-//        case .StampedImage: self.object = try container.decode(StampedImage.self, forKey: .object)
-//        case .Circle: self.object = try container.decode(Circle.self, forKey: .object)
-//        case .PhysicsCircle: self.object = try container.decode(PhysicsCircle.self, forKey: .object)
-//        case .Shape: self.object = try container.decode(Shape.self, forKey: .object)
-//        case .PhysicsShape: self.object = try container.decode(Shape.self, forKey: .object)
+        case .PhysicsBox: self.object = try container.decode(PhysicsBox.self, forKey: .object)
+        case .Text: self.object = try container.decode(Text.self, forKey: .object)
+        case .Image: self.object = try container.decode(Image.self, forKey: .object)
+        case .PhysicsImage: self.object = try container.decode(PhysicsImage.self, forKey: .object)
+        case .StampedImage: self.object = try container.decode(StampedImage.self, forKey: .object)
+        case .Circle: self.object = try container.decode(Circle.self, forKey: .object)
+        case .PhysicsCircle: self.object = try container.decode(PhysicsCircle.self, forKey: .object)
+        case .Shape: self.object = try container.decode(Shape.self, forKey: .object)
+        case .PhysicsShape: self.object = try container.decode(Shape.self, forKey: .object)
         }
     }
 }
