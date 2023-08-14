@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-public extension String {
+extension String {
     var color: (r:UInt8,g:UInt8,b:UInt8) {
         let scanner = Scanner(string: self)
         var rgbValue: UInt64 = 0
@@ -20,16 +20,17 @@ public extension String {
     }
 }
 
-public extension NSColor {
+extension NSColor {
     convenience init(hex: String) {
         let (r,g,b) = hex.color
         self.init(r: r, g: g, b: b)
     }
-    convenience init(r: UInt8, g: UInt8, b: UInt8) {
+    convenience init(r: UInt8, g: UInt8, b: UInt8, a: UInt8 = .max) {
         self.init(
             red: CGFloat(r) / 0xff,
             green: CGFloat(g) / 0xff,
-            blue: CGFloat(b) / 0xff, alpha: 1
+            blue: CGFloat(b) / 0xff,
+            alpha: CGFloat(a) / 0xff
         )
     }
     func color() -> Color {
@@ -42,31 +43,43 @@ typealias NSColor = UIColor
 #endif
 
 
-public struct Color {
-    public var red: UInt8
-    public var green: UInt8
-    public var blue: UInt8
+struct Color: Equatable, JSON {
+    var r: UInt8
+    var g: UInt8
+    var b: UInt8
+    var a: UInt8
     
-    public var nsColor: NSColor { return .init(r: red, g: green, b: blue) }
+    var red: UInt8 { get { r } set { r = newValue} }
+    var green: UInt8 { get { g } set { g = newValue} }
+    var blue: UInt8 { get { b } set { b = newValue} }
+    var alpha: UInt8 { get { a } set { a = newValue} }
     
-    public init(r: UInt8, g: UInt8, b: UInt8) {
-        (self.red, self.green, self.blue) = (r, g, b)
+    var json: [String : JSON] { ["r":r,"g":g,"b":b,"a":a] }
+    
+    var nsColor: NSColor { return .init(r: red, g: green, b: blue, a: alpha) }
+    
+    init(r: UInt8, g: UInt8, b: UInt8) {
+        (self.r, self.g, self.b, self.a) = (r, g, b, .max)
     }
-    public init(hex: String) {
-        (red, green, blue) = hex.color
+    init(r: UInt8, g: UInt8, b: UInt8, a: UInt8) {
+        (self.r, self.g, self.b, self.a) = (r, g, b, a)
+    }
+    init(hex: String) {
+        (r, g, b) = hex.color
+        a = .max
     }
     
-    public static var black: Self { Color.init(hex: "000000") }
-    public static var blue: Self { Color.init(hex: "c0d8da") }
-    public static var darkBlue: Self { Color.init(hex: "8aabb0") }
-    public static var lightGray: Self { Color.init(hex: "cecece") }
-    public static var darkGray: Self { Color.init(hex: "848484") }
-    public static var orange: Self { Color.init(hex: "e9c1a7") }
-    public static var green: Self { Color.init(hex: "9bb085") }
-    public static var darkYellow: Self { Color.init(hex: "b89c5d") }
-    public static var purple: Self { Color.init(hex: "885ca7") }
-    public static var white: Self { Color.init(hex: "ffffff") }
-    public static var redSelection: Self { Color.init(hex: "ff8888") }
+    static var black: Self { Color.init(hex: "000000") }
+    static var blue: Self { Color.init(hex: "c0d8da") }
+    static var darkBlue: Self { Color.init(hex: "8aabb0") }
+    static var lightGray: Self { Color.init(hex: "cecece") }
+    static var darkGray: Self { Color.init(hex: "848484") }
+    static var orange: Self { Color.init(hex: "e9c1a7") }
+    static var green: Self { Color.init(hex: "9bb085") }
+    static var darkYellow: Self { Color.init(hex: "b89c5d") }
+    static var purple: Self { Color.init(hex: "885ca7") }
+    static var white: Self { Color.init(hex: "ffffff") }
+    static var redSelection: Self { Color.init(hex: "ff8888") }
 }
 
 //

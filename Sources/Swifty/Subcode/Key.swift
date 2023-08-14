@@ -1,12 +1,11 @@
 //
-//  mycode.swift
-//  PappasSpriteKit
+//  Key.swift
+//  
 //
-//  Created by Jonathan Pappas on 5/3/23.
+//  Created by Jonathan Pappas on 8/14/23.
 //
 
 import Foundation
-import SpriteKit
 
 // use strings instead →
 @objc public enum Key: UInt16 {
@@ -66,14 +65,4 @@ import SpriteKit
     case downArrow = 125
     case rightArrow = 124
     case unknown = 1000
-}
-
-
-
-// Operator Overloads (Make more generic ones)
-public func +=(lhs: inout CGFloat, rhs: Int) {
-    lhs += CGFloat(rhs)
-}
-public func +=(lhs: inout Double, rhs: Int) {
-    lhs += Double(rhs)
 }
