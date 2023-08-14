@@ -120,7 +120,13 @@ class RootScene: SKScene, SKPhysicsContactDelegate {
 }
 
 public class Options {
-    var cameraTrackingDelay: Double = 0
+    public var cameraTrackingDelay: Double = 0
+    public var showsFPS = false {
+        willSet { trueScene.view?.showsFPS = newValue }
+    }
+    public var showsNodeCount = false {
+        willSet { trueScene.view?.showsFPS = newValue }
+    }
     // var cameraTracksRotation: Bool = true
     // fileprivate var _resetCameraRotation = false
     // func resetCameraRotation() { _resetCameraRotation = true }
@@ -243,7 +249,27 @@ public extension Scene {
     func encode() {
         print(Everything.encode())
     }
-    func decode(_ json: String) -> [Node] {
-        return Everything.decode(json)
+    func decode(jsonString: String) -> [Node] {
+        return Everything.decode(jsonString)
     }
+    
+    func decode(_ fileName: String) -> [Node] {
+        
+        if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: url)
+                //let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+                // Process your JSON object here
+                let jsonDecoder = JSONDecoder()
+                let container = try jsonDecoder.decode([Container].self, from: data)
+                return Everything.decodeFrom(container)
+            } catch {
+                print("Error decoding or reading JSON: \(error)")
+            }
+        } else {
+            print("JSON file not found in the bundle.")
+        }
+        fatalError()
+    }
+    
 }

@@ -43,8 +43,7 @@ struct Everything {
     static func encode() -> String {
         return o._nodes.map({ Container($0.value) }).encode()
     }
-    static func decode(_ jsonString: String) -> [Node] {
-        let c = [Container].decode(jsonString)
+    static func decodeFrom(_ c: [Container]) -> [Node] {
         var o: [Node] = []
 
         let copytime = CopyOptionalID()
@@ -74,6 +73,10 @@ struct Everything {
         }
 
         return o
+    }
+    static func decode(_ jsonString: String) -> [Node] {
+        let c = [Container].decode(jsonString)
+        return decodeFrom(c)
     }
 }
 
