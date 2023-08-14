@@ -240,7 +240,10 @@ public extension Scene {
     func clearJSON() {
         Everything.o = Everything()
     }
-    func saveJSON() {
+    func encode() {
         print(Everything.encode())
+    }
+    func decode(_ json: String) -> [Node] {
+        return Everything.decode(json)
     }
 }
