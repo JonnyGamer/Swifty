@@ -81,7 +81,7 @@ struct Everything {
 }
 
 enum Types: String, JSONEnum {
-    case Node//, Box, Text, Image, StampedImage, Circle, Shape
+    case Node, Box//, Text, Image, StampedImage, Circle, Shape
     case PhysicsNode//, PhysicsBox, PhysicsImage, PhysicsCircle, PhysicsShape
 }
 
@@ -111,7 +111,7 @@ class Container: JSON, Equatable {
         switch self.type {
         case .Node: self.object = try container.decode(Node.self, forKey: .object)
         case .PhysicsNode: self.object = try container.decode(PhysicsNode.self, forKey: .object)
-//        case .Box: self.object = try container.decode(Box.self, forKey: .object)
+        case .Box: self.object = try container.decode(Box.self, forKey: .object)
 //        case .PhysicsBox: self.object = try container.decode(PhysicsBox.self, forKey: .object)
 //        case .Text: self.object = try container.decode(Text.self, forKey: .object)
 //        case .Image: self.object = try container.decode(Image.self, forKey: .object)
