@@ -7,10 +7,10 @@
 
 import SpriteKit
 
-class Node: JSON, Nodable, Constructable, Equatable {
+public class Node: JSON, Nodable, Constructable, Equatable {
     
     // may or may not need this
-    static func == (lhs: Node, rhs: Node) -> Bool {
+    static public func == (lhs: Node, rhs: Node) -> Bool {
         return lhs === rhs
     }
     
@@ -21,7 +21,7 @@ class Node: JSON, Nodable, Constructable, Equatable {
     
     var type: Types { .Node }
     var node: SKNode = SKNode()
-    var __node__: SKNode { return node }
+    public var __node__: SKNode { return node }
     
     var Name: OptionalString?
     var X: OptionalDouble?
@@ -43,7 +43,7 @@ class Node: JSON, Nodable, Constructable, Equatable {
     var childrenIDs: Set<OptionalID>?
     var deallocated: OptionalBool?
     
-    init() {
+    public init() {
         if ID == nil {
             ID = .Make()
         }
@@ -51,7 +51,7 @@ class Node: JSON, Nodable, Constructable, Equatable {
         updateValues()
     }
     
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.X = try container.decodeIfPresent(OptionalDouble.self, forKey: .X)
         self.Y = try container.decodeIfPresent(OptionalDouble.self, forKey: .Y)
@@ -69,7 +69,7 @@ class Node: JSON, Nodable, Constructable, Equatable {
 extension Node {
     
     /// Add a child node.
-    func add<T: Node>(_ child: T...) {
+    public func add<T: Node>(_ child: T...) {
         for child in child {
             if _deallocated { print("Warning: Attempting to add a node you deallocated"); return }
             if child.__node__.parent != nil {
@@ -83,7 +83,7 @@ extension Node {
     }
     
     /// Move a node to a new parent.
-    func moveTo<T: Node>(_ toNewParent: T) {
+    public func moveTo<T: Node>(_ toNewParent: T) {
         //guard let pID = parent?.id else { print("Warning: Node does not have a parent yet lol"); return }
         if __node__.parent == nil { print("Warning: Node does not have a parent yet lol"); return }
         if let pID = parent?.id, Everything.getNode(key: pID) === toNewParent { print("Warning: Moving a node to it's own parent."); return }
@@ -95,7 +95,7 @@ extension Node {
         __node__.move(toParent: toNewParent.__node__)
     }
     
-    var copy: Self {
+    public var copy: Self {
         let copyTime = CopyOptionalID()
         
         let woo = notTopCopy(copyTime)

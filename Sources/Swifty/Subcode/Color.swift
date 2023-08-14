@@ -43,7 +43,7 @@ typealias NSColor = UIColor
 #endif
 
 
-struct Color: Equatable, JSON {
+public struct Color: Equatable, JSON {
     var r: UInt8
     var g: UInt8
     var b: UInt8

@@ -117,93 +117,16 @@ class RootScene: SKScene, SKPhysicsContactDelegate {
         curr.curr.collision?()
     }
     
-    
-    func presentScene<T: Scene>(_ someScene: T, transition: SceneTransition) {
-        // Remove old scene, and properties
-        let centerPosition = CGPoint.zero// CGPoint.init(x: self.size.width/2, y: self.size.height/2)
-        keysPressed = []
-        nodesTouching = []
-        nodesReleased = []
-        transitioning = true
-        physicsWorld.removeAllJoints()
-        
-        switch transition {
-        case .none:
-            curr?.removeFromParentRecursive()
-            //followingNode = nil
-            //magicCamera.removeAllActions()
-            //magicCamera.position = .zero
-            curr = SceneHost.init(hosting: someScene)
-            addChild(curr)
-            curr.position = centerPosition
-            curr.curr.began?()
-            transitioning = false
-            
-        case .push(let x):
-            
-            let dpoint = x.d
-            let moveByAction = SKAction.move(by: dpoint, duration: 1).easeInOut()
-            
-            guard let oldCurr = curr else { return }
-            outgoingCurr = oldCurr
-            oldCurr.run(moveByAction) {
-                oldCurr.removeFromParentRecursive()
-                self.outgoingCurr = nil
-            }
-            
-            let newCurr = SceneHost.init(hosting: someScene)
-            self.curr = newCurr
-            incomingCurr = newCurr
-            addChild(newCurr)
-            newCurr.position = centerPosition
-            newCurr.position.x -= dpoint.dx
-            newCurr.position.y -= dpoint.dy
-            newCurr.run(moveByAction) {
-                self.incomingCurr = nil
-                self.transitioning = false
-            }
-            newCurr.curr.began?()
-        
-        case .slide(let x):
-            let dpoint = x.d
-            let moveByAction = SKAction.move(by: dpoint, duration: 1).easeInOut()
-            
-            guard let oldCurr = curr else { return }
-            outgoingCurr = oldCurr
-            oldCurr.run(.wait(forDuration: 1)) {
-                oldCurr.removeFromParentRecursive()
-                self.outgoingCurr = nil
-            }
-            
-            let newCurr = SceneHost.init(hosting: someScene)
-            self.curr = newCurr
-            incomingCurr = newCurr
-            addChild(newCurr)
-            newCurr.position = centerPosition
-            newCurr.position.x -= dpoint.dx
-            newCurr.position.y -= dpoint.dy
-            newCurr.run(moveByAction) {
-                self.incomingCurr = nil
-                self.transitioning = false
-            }
-            newCurr.curr.began?()
-        
-        default:
-            break
-            
-        }
-        
-    }
 }
 
+public class Options {
+    var cameraTrackingDelay: Double = 0
+    // var cameraTracksRotation: Bool = true
+    // fileprivate var _resetCameraRotation = false
+    // func resetCameraRotation() { _resetCameraRotation = true }
+}
 class SceneHost: SKCropNode {
     
-    class Options {
-        var cameraTrackingDelay: Double = 0
-        // var cameraTracksRotation: Bool = true
-        // fileprivate var _resetCameraRotation = false
-        // func resetCameraRotation() { _resetCameraRotation = true }
-    }
     var options = Options()
     
     var curr: Scene
@@ -230,13 +153,6 @@ class SceneHost: SKCropNode {
             } else {
                 hostNode.position = f.position.negative()
             }
-            // Doesn't work properly with SKPhysics ... OOF!
-//            if options.cameraTracksRotation {
-//                hostNode.zRotation = -f.zRotation
-//            } else if options._resetCameraRotation {
-//                hostNode.zRotation = 0
-//                options._resetCameraRotation = false
-//            }
         }
         curr.update?()
     }
@@ -252,20 +168,6 @@ class SceneHost: SKCropNode {
         //scrop.run(.moveBy(x: 0, y: 100, duration: 1))
         
         addChild(bg)
-        
-        // Testing Spotlight SKCropNode lol
-//        let N = SKNode()
-//        for i in 1...100 {
-//            let o = SKShapeNode.init(circleOfRadius: 300 - CGFloat(i)*1)
-//            o.fillColor = .init(white: 1.0, alpha: 0.05)
-//            o.strokeColor = .clear
-//            N.addChild(o)
-//        }
-//
-//        //let nstamp = N.stamp
-//        self.maskNode = N
-//        N.run(.repeatForever(.sequence([.moveBy(x: 300, y: 0, duration: 1), .moveBy(x: -300, y: 0, duration: 1)])))
-        
         
     }
     required init?(coder aDecoder: NSCoder) {
@@ -286,25 +188,8 @@ class SceneHost: SKCropNode {
     @objc optional func touchMoved(dx: Double, dy: Double)
     @objc optional func touchEnded()
 }
-enum SceneTransition {
-    enum Direction: Int {
-        case left, right, up, down
-        var d: CGVector {
-            switch self {
-            case .left: return .init(dx: -1600, dy: 0)
-            case .right: return .init(dx: 1600, dy: 0)
-            case .down: return .init(dx: 0, dy: -1000)
-            case .up: return .init(dx: 0, dy: 1000)
-            }
-        }
-    }
-    case none
-    case push(Direction)
-    case slide(Direction)
-    case fadeTogether
-    case fade(Color)
-}
-extension Scene {
+
+public extension Scene {
     func presentScene<T: Scene>(_ someScene: T) {
         presentScene(someScene, transition: .none)
     }
@@ -313,9 +198,9 @@ extension Scene {
     }
 }
 
-extension Scene {
+public extension Scene {
     var keysPressed: [Key] { return trueScene.keysPressed }
-    func add<T: Nodable>(_ child: T) {
+    func add<T: Node>(_ child: T) {
         if child.__node__.parent != nil {
             print("Warning: Attempting to add a child which already has a parent.")
             return
@@ -327,7 +212,7 @@ extension Scene {
     func holdingKey(_ key: Key) -> Bool {
         return keysPressed.contains(key)
     }
-    func cameraFollows<T: Nodable>(_ child: T) {
+    func cameraFollows<T: Node>(_ child: T) {
         trueScene.curr.followingNode = nil
         trueScene.curr.hostNode.removeAllActions()
         trueScene.curr.followingNode = child.__node__
@@ -341,14 +226,14 @@ extension Scene {
     }
     var width: Double { Double(trueScene.size.width) }
     var height: Double { Double(trueScene.size.height) }
-    var options: SceneHost.Options {
+    var options: Options {
         get { trueScene.curr.options }
         set { trueScene.curr.options = newValue }
     }
-    func iAmTouching<T: Nodable>(_ some: T) -> Bool {
+    func iAmTouching<T: Node>(_ some: T) -> Bool {
         return trueScene.nodesTouching.contains { some.__node__ === $0 }
     }
-    func iStoppedTouching<T: Nodable>(_ some: T) -> Bool {
+    func iStoppedTouching<T: Node>(_ some: T) -> Bool {
         return trueScene.nodesReleased.contains { some.__node__ === $0 }
     }
 }

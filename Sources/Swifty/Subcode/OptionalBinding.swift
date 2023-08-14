@@ -14,83 +14,83 @@ protocol OptionalBinding {
 }
 
 
-class OptionalBool: NSObject, JSON, OptionalBinding {
+public class OptionalBool: NSObject, JSON, OptionalBinding {
     var value: Bool
     required init(_ value: Bool) { self.value = value }
     enum CodingKeys: String, CodingKey {
         case value
     }
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         value = try container.decode(BoundType.self)
     }
     // Custom encode(to:) method to represent your class as a single integer in the JSON
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(value)
     }
 }
-class OptionalInt: NSObject, JSON, OptionalBinding {
+public class OptionalInt: NSObject, JSON, OptionalBinding {
     var value: Int
     required init(_ value: Int) { self.value = value }
     enum CodingKeys: String, CodingKey {
         case value
     }
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         value = try container.decode(BoundType.self)
     }
     // Custom encode(to:) method to represent your class as a single integer in the JSON
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(value)
     }
 }
-class OptionalDouble: NSObject, JSON, OptionalBinding {
+public class OptionalDouble: NSObject, JSON, OptionalBinding {
     var value: Double
     required init(_ value: Double) { self.value = value }
     enum CodingKeys: String, CodingKey {
         case value
     }
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         value = try container.decode(BoundType.self)
     }
     // Custom encode(to:) method to represent your class as a single integer in the JSON
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(value)
     }
 }
-class OptionalString: NSObject, JSON, OptionalBinding {
+public class OptionalString: NSObject, JSON, OptionalBinding {
     var value: String
     required init(_ value: String) { self.value = value }
     enum CodingKeys: String, CodingKey {
         case value
     }
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         value = try container.decode(BoundType.self)
     }
     // Custom encode(to:) method to represent your class as a single integer in the JSON
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(value)
     }
 }
 
-class OptionalColor: NSObject, JSON, OptionalBinding {
+public class OptionalColor: NSObject, JSON, OptionalBinding {
     var value: Color
     required init(_ value: Color) { self.value = value }
     enum CodingKeys: String, CodingKey {
         case value
     }
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         value = try container.decode(BoundType.self)
     }
     // Custom encode(to:) method to represent your class as a single integer in the JSON
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(value)
     }
@@ -98,27 +98,27 @@ class OptionalColor: NSObject, JSON, OptionalBinding {
 
 
 
-enum FontList: String, JSON {
+public enum FontList: String, JSON {
     case Helvetica
 }
-class OptionalFont: NSObject, JSON, OptionalBinding {
+public class OptionalFont: NSObject, JSON, OptionalBinding {
     var value: FontList
     required init(_ value: FontList) { self.value = value }
     enum CodingKeys: String, CodingKey {
         case value
     }
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         value = try container.decode(BoundType.self)
     }
     // Custom encode(to:) method to represent your class as a single integer in the JSON
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(value)
     }
 }
 
-enum Horizontal: String, JSON {
+public enum Horizontal: String, JSON {
     case left, right, center
     func horitzonalAlignmentMode() -> SKLabelHorizontalAlignmentMode {
         switch self {
@@ -128,23 +128,23 @@ enum Horizontal: String, JSON {
         }
     }
 }
-class OptionalHorizontal: NSObject, JSON, OptionalBinding {
+public class OptionalHorizontal: NSObject, JSON, OptionalBinding {
     var value: Horizontal
     required init(_ value: Horizontal) { self.value = value }
     enum CodingKeys: String, CodingKey {
         case value
     }
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         value = try container.decode(BoundType.self)
     }
     // Custom encode(to:) method to represent your class as a single integer in the JSON
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(value)
     }
 }
-enum Vertical: String, JSON {
+public enum Vertical: String, JSON {
     case top, bottom, center, baseline
     func verticalAlignmentMode() -> SKLabelVerticalAlignmentMode {
         switch self {
@@ -155,35 +155,35 @@ enum Vertical: String, JSON {
         }
     }
 }
-class OptionalVertical: NSObject, JSON, OptionalBinding {
+public class OptionalVertical: NSObject, JSON, OptionalBinding {
     var value: Vertical
     required init(_ value: Vertical) { self.value = value }
     enum CodingKeys: String, CodingKey {
         case value
     }
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         value = try container.decode(BoundType.self)
     }
     // Custom encode(to:) method to represent your class as a single integer in the JSON
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(value)
     }
 }
 
-class OptionalNode: NSObject, JSON, OptionalBinding {
+public class OptionalNode: NSObject, JSON, OptionalBinding {
     var value: [Container]
     required init(_ value: [Container]) { self.value = value }
     enum CodingKeys: String, CodingKey {
         case value
     }
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         value = try container.decode(BoundType.self)
     }
     // Custom encode(to:) method to represent your class as a single integer in the JSON
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(value)
     }
@@ -299,7 +299,7 @@ class CopyOptionalID {
     }
 }
 
-class OptionalID: NSObject, Codable, OptionalBinding {
+public class OptionalID: NSObject, Codable, OptionalBinding {
     static var initialized: Int = 0
     static var transform: [Int:OptionalID] = [:]
     
@@ -318,12 +318,12 @@ class OptionalID: NSObject, Codable, OptionalBinding {
     required init(_ value: Int) {
         self.value = value
     }
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         value = try container.decode(Int.self)
     }
     // Custom encode(to:) method to represent your class as a single integer in the JSON
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(value)
     }
