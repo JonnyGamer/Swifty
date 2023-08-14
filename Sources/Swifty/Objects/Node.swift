@@ -30,12 +30,23 @@ public class Node: JSON, Nodable, Constructable, Equatable {
     var Angle: OptionalDouble?
     var Alpha: OptionalDouble?
     
+    public var x: Double { get { _x } set { _x = newValue } }
+    public var y: Double { get { _y } set { _y = newValue } }
+    public var z: Double { get { _z } set { _z = newValue } }
+    public var alpha: Double { get { _alpha } set { _alpha = newValue } }
+    public var angle: Double { get { _angle } set { _angle = newValue } }
+    public var name: String { get { _name } set { _name = newValue } }
+    public var children: [Node] { _children }
+    public func remove() { _remove() }
+    public func deallocate() { _deallocate() }
+    
     private func updateValues() {
         x = x
         y = y
         z = z
         angle = angle
         alpha = alpha
+        name = name
     }
     
     var ID: OptionalID?

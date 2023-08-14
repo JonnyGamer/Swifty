@@ -23,27 +23,27 @@ import SpriteKit
 }
 
 extension Nodable {
-    public var x: Double {
+    var _x: Double {
         get { Get(X, 0.0) }
         set { Set(&X, 0.0, newValue, __node__, \.position.x) }
     }
-    public var y: Double {
+    var _y: Double {
         get { Get(Y, 0.0) }
         set { Set(&Y, 0.0, newValue, __node__, \.position.y) }
     }
-    public var name: String {
+    var _name: String {
         get { Get(Name, "") }
         set { Set(&Name, "", newValue, __node__, \.name) }
     }
-    public var z: Double {
+    var _z: Double {
         get { Get(Z, 0.0) }
         set { Set(&Z, 0.0, newValue, __node__, \.zPosition) }
     }
-    public var alpha: Double {
+    var _alpha: Double {
         get { Get(Alpha, 1.0) }
         set { Set(&Alpha, 1.0, newValue, __node__, \.alpha) }
     }
-    public var angle: Double {
+    var _angle: Double {
         get { Get(Angle, 0.0) }
         set { Set(&Angle, 0.0, newValue, __node__, \.zRotation) { CGFloat($0.toRadians()) } }
     }
@@ -63,7 +63,7 @@ extension Nodable {
         }
     }
     
-    public var children: [Node] {
+    var _children: [Node] {
         return _childrenIDs.map { Everything.getNode(key: $0.value) }.compactMap { $0 }
     }
     /// This property should be private.
@@ -82,7 +82,7 @@ extension Nodable {
     
     
     /// Remove a node from its parent.
-    public func remove() {
+    func _remove() {
         _removeIDFromParent()
         __node__.removeFromParent()
     }
@@ -105,9 +105,9 @@ extension Nodable {
         }
     }
     /// Deallocate the node, so it won't appear when dumping JSON of all the nodes you've ever made. Warning, once deallocated, you cannot add this node to the scene.
-    public func deallocate() {
+    func _deallocate() {
         _deallocated = true
-        remove()
+        _remove()
         Everything.removeNode(key: id)
         // Everything._nodes[ID.value] = nil
         for childID in childrenIDs ?? [] {
