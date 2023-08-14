@@ -158,6 +158,7 @@ class SceneHost: SKCropNode {
     }
     
     init(hosting: Scene) {
+        hosting.clearJSON()
         self.curr = hosting
         super.init()
         addChild(hostNode)
@@ -235,5 +236,11 @@ public extension Scene {
     }
     func iStoppedTouching<T: Node>(_ some: T) -> Bool {
         return trueScene.nodesReleased.contains { some.__node__ === $0 }
+    }
+    func clearJSON() {
+        Everything.o = Everything()
+    }
+    func saveJSON() {
+        print(Everything.encode())
     }
 }

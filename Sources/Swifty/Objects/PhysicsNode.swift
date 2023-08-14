@@ -55,7 +55,7 @@ public class PhysicsNode: Node, Physical {
         node.physicsBody = __physics__
     }
     
-    override init() {
+    override public init() {
         super.init()
         updateValues()
     }

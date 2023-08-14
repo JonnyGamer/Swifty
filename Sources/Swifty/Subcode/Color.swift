@@ -49,37 +49,37 @@ public struct Color: Equatable, JSON {
     var b: UInt8
     var a: UInt8
     
-    var red: UInt8 { get { r } set { r = newValue} }
-    var green: UInt8 { get { g } set { g = newValue} }
-    var blue: UInt8 { get { b } set { b = newValue} }
-    var alpha: UInt8 { get { a } set { a = newValue} }
+    public var red: UInt8 { get { r } set { r = newValue} }
+    public var green: UInt8 { get { g } set { g = newValue} }
+    public var blue: UInt8 { get { b } set { b = newValue} }
+    public var alpha: UInt8 { get { a } set { a = newValue} }
     
     var json: [String : JSON] { ["r":r,"g":g,"b":b,"a":a] }
     
     var nsColor: NSColor { return .init(r: red, g: green, b: blue, a: alpha) }
     
-    init(r: UInt8, g: UInt8, b: UInt8) {
+    public init(r: UInt8, g: UInt8, b: UInt8) {
         (self.r, self.g, self.b, self.a) = (r, g, b, .max)
     }
-    init(r: UInt8, g: UInt8, b: UInt8, a: UInt8) {
+    public init(r: UInt8, g: UInt8, b: UInt8, a: UInt8) {
         (self.r, self.g, self.b, self.a) = (r, g, b, a)
     }
-    init(hex: String) {
+    public init(hex: String) {
         (r, g, b) = hex.color
         a = .max
     }
     
-    static var black: Self { Color.init(hex: "000000") }
-    static var blue: Self { Color.init(hex: "c0d8da") }
-    static var darkBlue: Self { Color.init(hex: "8aabb0") }
-    static var lightGray: Self { Color.init(hex: "cecece") }
-    static var darkGray: Self { Color.init(hex: "848484") }
-    static var orange: Self { Color.init(hex: "e9c1a7") }
-    static var green: Self { Color.init(hex: "9bb085") }
-    static var darkYellow: Self { Color.init(hex: "b89c5d") }
-    static var purple: Self { Color.init(hex: "885ca7") }
-    static var white: Self { Color.init(hex: "ffffff") }
-    static var redSelection: Self { Color.init(hex: "ff8888") }
+    public static var black: Self { Color.init(hex: "000000") }
+    public static var blue: Self { Color.init(hex: "c0d8da") }
+    public static var darkBlue: Self { Color.init(hex: "8aabb0") }
+    public static var lightGray: Self { Color.init(hex: "cecece") }
+    public static var darkGray: Self { Color.init(hex: "848484") }
+    public static var orange: Self { Color.init(hex: "e9c1a7") }
+    public static var green: Self { Color.init(hex: "9bb085") }
+    public static var darkYellow: Self { Color.init(hex: "b89c5d") }
+    public static var purple: Self { Color.init(hex: "885ca7") }
+    public static var white: Self { Color.init(hex: "ffffff") }
+    public static var redSelection: Self { Color.init(hex: "ff8888") }
 }
 
 //
