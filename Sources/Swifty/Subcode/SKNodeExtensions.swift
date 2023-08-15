@@ -98,7 +98,7 @@ extension SKNode {
             return a.path?.contains(localPoint) ?? false
         }
         
-        return false
+        return true
     }
 }
 
