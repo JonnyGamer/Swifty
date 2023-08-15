@@ -153,5 +153,22 @@ extension Node {
 //        __node__.run(a, withKey: action.name)
 //    }
     
+    public func centerAt(x: Double, y: Double) {
+        let point = CGPoint(x: x, y: y)
+        self.x = point.x
+        self.y = point.y
+        let whereThis = __node__.calculateAccumulatedFrame()
+        self.x += point.x - whereThis.midX
+        self.y += point.y - whereThis.midY
+    }
+    public func anchorAt(x: Double, y: Double, anchorX: Double, anchorY: Double) {
+        let point = CGPoint(x: x, y: y)
+        self.x = point.x
+        self.y = point.y
+        let whereThis = __node__.calculateAccumulatedFrame()
+        self.x += (point.x - whereThis.minX) - whereThis.width * anchorX
+        self.y += (point.y - whereThis.minY) - whereThis.height * anchorY
+    }
+    
 }
 
