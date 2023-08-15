@@ -87,6 +87,7 @@ public class Shape: Node, Polygonable {
         Points = points
         _regular = true
         _radius = radius
+        Sides = .init(sides)
         updateValues()
     }
     convenience public init(sides: Int, sideLength: Double) {

@@ -41,7 +41,7 @@ extension Polygonable {
         }
     }
     var _sides: Int {
-        _points.count
+        Get(Sides, _points.count)
     }
     var _regular: Bool {
         get { Get(Regular, false) }
