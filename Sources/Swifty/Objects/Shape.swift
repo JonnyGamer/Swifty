@@ -16,11 +16,14 @@ public class Shape: Node, Polygonable {
     var __shape__: SKShapeNode { shape }
     
     private enum CodingKeys: String, CodingKey {
-        case Color, Points
+        case Color, Points, Regular, Sides, Radius
     }
     
     var Color: OptionalColor?
     var Points: [CGPoint]?
+    var Sides: OptionalInt?
+    var Regular: OptionalBool?
+    var Radius: OptionalDouble?
     
     public var color: Color { get { _color } set { _color = newValue } }
     //public var shape: [CGPoint] { get { _shape } set { _shape = newValue } }
@@ -29,32 +32,39 @@ public class Shape: Node, Polygonable {
         color = color
     }
     
-//    init(radius: CGFloat) {
-//        shape = SKShapeNode.init(circleOfRadius: radius)
-//        super.init()
-//        color = .white
-//        updateValues()
-//    }
-    
     required init(from decoder: Decoder) throws {
+        shape = SKShapeNode.init()
+        
         try super.init(from: decoder)
+        
         let container = try decoder.container(keyedBy: CodingKeys.self)
         Color = try container.decodeIfPresent(OptionalColor.self, forKey: .Color)
-        Points = try container.decodeIfPresent([CGPoint].self, forKey: .Color)
+        Regular = try container.decodeIfPresent(OptionalBool.self, forKey: .Regular)
+        if _regular {
+            Sides = try container.decodeIfPresent(OptionalInt.self, forKey: .Sides)//?.value ?? 3
+            Radius = try container.decodeIfPresent(OptionalDouble.self, forKey: .Radius)//?.value ?? 100
+            let (path, points) = polygonPoints(sides: _sides, radius: _radius)
+            Points = points
+            shape.path = path
+        } else {
+            Points = try container.decodeIfPresent([CGPoint].self, forKey: .Color)
+        }
+        
         updateValues()
     }
     
     override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(Color, forKey: .Color)
-        try container.encodeIfPresent(Points, forKey: .Points)
+        if !_regular {
+            try container.encodeIfPresent(Points, forKey: .Points)
+        } else {
+            try container.encodeIfPresent(Sides, forKey: .Sides)
+        }
+        try container.encodeIfPresent(Regular, forKey: .Regular)
         try super.encode(to: encoder)
     }
     
-//    fileprivate var node: SKShapeNode
-//    var __node__: SKNode { return node }
-//    var __shape__: SKShapeNode { return node }
-//
     convenience public init(points: [Double], _ extra: [Double]...) {
         self.init(p: [points] + extra)
     }
@@ -67,39 +77,15 @@ public class Shape: Node, Polygonable {
         updateValues()
     }
     
-    
-//    fileprivate init(_ shape: SKShapeNode) {
-//        node = shape
-//    }
-//    fileprivate init(_ shape: Shape) {
-//        node = shape.__shape__
-//    }
     public init(sides: Int, radius: Double) {
-        assert(sides > 2)
-        let n = sides
-        let r = radius
-        let path = CGMutablePath()
-        let angle = 2.0 * Double.pi / Double(n)
-        var base: Double = (.pi/2)
-        if sides % 2 == 0 { base += angle/2 }
-        var points: [CGPoint] = []
+        let (path, points) = polygonPoints(sides: sides, radius: radius)
         
-        for i in 0..<n {
-            let x = r * cos(Double(i) * angle + base)
-            let y = r * sin(Double(i) * angle + base)
-
-            if i == 0 {
-                path.move(to: CGPoint(x: x, y: y))
-                points.append(CGPoint(x: x, y: y))
-            } else {
-                path.addLine(to: CGPoint(x: x, y: y))
-                points.append(CGPoint(x: x, y: y))
-            }
-        }
         shape = SKShapeNode.init(path: path)
         super.init()
         color = .white
         Points = points
+        _regular = true
+        _radius = radius
         updateValues()
     }
     convenience public init(sides: Int, sideLength: Double) {
@@ -110,3 +96,27 @@ public class Shape: Node, Polygonable {
     
 }
 
+func polygonPoints(sides: Int, radius: Double) -> (path: CGPath, points: [CGPoint]) {
+    assert(sides > 2)
+    let n = sides
+    let r = radius
+    let path = CGMutablePath()
+    let angle = 2.0 * Double.pi / Double(n)
+    var base: Double = (.pi/2)
+    if sides % 2 == 0 { base += angle/2 }
+    var points: [CGPoint] = []
+    
+    for i in 0..<n {
+        let x = r * cos(Double(i) * angle + base)
+        let y = r * sin(Double(i) * angle + base)
+
+        if i == 0 {
+            path.move(to: CGPoint(x: x, y: y))
+            points.append(CGPoint(x: x, y: y))
+        } else {
+            path.addLine(to: CGPoint(x: x, y: y))
+            points.append(CGPoint(x: x, y: y))
+        }
+    }
+    return (path, points)
+}
