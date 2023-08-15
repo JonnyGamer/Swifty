@@ -48,7 +48,7 @@ public struct Color: Equatable, JSON {
     var g: UInt8
     var b: UInt8
     var a: UInt8
-    
+    var rgb: (CGFloat, CGFloat, CGFloat) { (CGFloat(r)/255, CGFloat(g)/255, CGFloat(b)/255) }
     public var red: UInt8 { get { r } set { r = newValue} }
     public var green: UInt8 { get { g } set { g = newValue} }
     public var blue: UInt8 { get { b } set { b = newValue} }
@@ -111,3 +111,22 @@ public struct Color: Equatable, JSON {
 //        strokeColor = to//.hexColor
 //    }
 //}
+
+public extension SKAction {
+    static func fillColor<T: SKNode>(from: (r: CGFloat, g: CGFloat, b: CGFloat), to: (r: CGFloat, g: CGFloat, b: CGFloat), duration: Double, colorize: [ReferenceWritableKeyPath<T, NSColor>] = []) -> SKAction {
+        return .customAction(withDuration: duration, actionBlock: { i, j in
+            let rinseR = from.r + (to.r - from.r) * j / CGFloat(duration)
+            let rinseG = from.g + (to.g - from.g) * j / CGFloat(duration)
+            let rinseB = from.b + (to.b - from.b) * j / CGFloat(duration)
+            for c in colorize {
+                (i as? T)?[keyPath: c] = NSColor.init(red: rinseR, green: rinseG, blue: rinseB, alpha: 1.0)
+            }
+        })
+    }
+}
+
+public extension SKAction {
+    static func fillColor<T: SKNode>(from: Color, to: Color, duration: Double, colorize: ReferenceWritableKeyPath<T, NSColor>...) -> SKAction {
+        .fillColor(from: from.rgb, to: to.rgb, duration: duration, colorize: colorize)
+    }
+}

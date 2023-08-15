@@ -175,3 +175,32 @@ extension SKPhysicsBody {
     }
     
 }
+
+
+@objc protocol Unpixelate {
+    @objc func unpixelate()
+}
+
+extension SKLabelNode: Unpixelate {
+    func bold() {
+        fontName = "SF Pro Rounded"
+    }
+    func unpixelate() {
+        fontSize *= xScale
+        setScale(1.0)
+    }
+    func centerText(_ node: CGSize) {
+        keepInside(node)
+        centerAt(.zero)
+        bold()
+        unpixelate()
+    }
+    func basicText(keepInside: CGSize) {
+        //self.bold()
+        self.keepInside(keepInside)
+        self.unpixelate()
+        self.centerAt(.zero)
+        //self.fontColor = .black
+    }
+}
+

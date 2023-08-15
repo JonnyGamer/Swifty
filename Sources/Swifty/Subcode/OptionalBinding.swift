@@ -99,7 +99,7 @@ public class OptionalColor: NSObject, JSON, OptionalBinding {
 
 
 public enum FontList: String, JSON {
-    case Helvetica
+    case Helvetica, SFProRounded = "SF Pro Rounded"
 }
 public class OptionalFont: NSObject, JSON, OptionalBinding {
     var value: FontList
