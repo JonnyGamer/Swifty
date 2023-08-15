@@ -216,6 +216,13 @@ public extension Scene {
         
         trueScene.curr.hostNode.addChild(child.__node__)
     }
+    func add(_ child: SKNode) {
+        if child.parent != nil {
+            print("Warning: Attempting to add a child which already has a parent.")
+            return
+        }
+        trueScene.curr.hostNode.addChild(child)
+    }
     func holdingKey(_ key: Key) -> Bool {
         return keysPressed.contains(key)
     }
