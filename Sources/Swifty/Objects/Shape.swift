@@ -11,8 +11,8 @@ import SpriteKit
 public class Shape: Node, Polygonable {
     
     override var type: Types { .Shape }
-    var shape: SKShapeNode!
-    override var node: SKNode { get { shape } set { shape = newValue as? SKShapeNode } }
+    var shape: SKShapeNode = SKShapeNode()
+    override var node: SKNode { get { shape } set { shape = newValue as! SKShapeNode } }
     var __shape__: SKShapeNode { shape }
     
     private enum CodingKeys: String, CodingKey {
@@ -33,7 +33,6 @@ public class Shape: Node, Polygonable {
     }
     
     required init(from decoder: Decoder) throws {
-        shape = SKShapeNode.init()
         
         try super.init(from: decoder)
         
@@ -73,7 +72,7 @@ public class Shape: Node, Polygonable {
     
     init(p: [[Double]]) {
         Points = p.map({ CGPoint.init(x: $0[0], y: $0[1]) })
-        shape = SKShapeNode.init(p: Points ?? [])
+        shape.path = SKShapeNode.init(p: Points ?? []).path
         super.init()
         color = .white
         updateValues()
