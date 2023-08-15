@@ -95,6 +95,7 @@ class RootScene: SKScene, SKPhysicsContactDelegate {
         //nodesTouching = nodes(at: location)
         nodesTouching = nodes(at: location).filter({ $0.containsPoint(location) })
         curr.curr.touchBegan?(x: location.x, y: location.y)
+        nodesTouching.touchBegan()
     }
     override func mouseMoved(with event: NSEvent) {
         if transitioning { return }
@@ -107,9 +108,17 @@ class RootScene: SKScene, SKPhysicsContactDelegate {
     override func mouseUp(with event: NSEvent) {
         if transitioning { return }
         nodesReleased = nodesTouching
+        
+        let nodesEndedOn = nodesTouching.filter({ $0.containsPoint(location) })
+        let nodesEndedOff = nodesTouching.filter({ !$0.containsPoint(location) })
+        
         nodesTouching.removeAll()
         curr.curr.touchEnded?()
         nodesReleased.removeAll()
+        
+        nodesEndedOn.touchEnded()
+        nodesEndedOff.touchCancelled()
+        
     }
 
     // Collision Fest :)

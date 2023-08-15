@@ -15,10 +15,24 @@ import SpriteKit
 
 
 extension Sequence where Element == SKNode {
-    func touched(_ touchFunc: (Touchable) -> ()) {
+    func touchBegan() {
         for i in self {
             if let t = i as? Touchable {
-                touchFunc(t)
+                t.touchBegan()
+            }
+        }
+    }
+    func touchEnded() {
+        for i in self {
+            if let t = i as? Touchable {
+                t.touchEnded()
+            }
+        }
+    }
+    func touchCancelled() {
+        for i in self {
+            if let t = i as? Touchable {
+                t.touchCancelled()
             }
         }
     }
