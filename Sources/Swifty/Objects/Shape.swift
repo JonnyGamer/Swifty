@@ -61,8 +61,9 @@ public class Shape: Node, Polygonable {
             try container.encodeIfPresent(Points, forKey: .Points)
         } else {
             try container.encodeIfPresent(Sides, forKey: .Sides)
+            try container.encodeIfPresent(Regular, forKey: .Regular)
+            try container.encodeIfPresent(Radius, forKey: .Radius)
         }
-        try container.encodeIfPresent(Regular, forKey: .Regular)
         try super.encode(to: encoder)
     }
     
