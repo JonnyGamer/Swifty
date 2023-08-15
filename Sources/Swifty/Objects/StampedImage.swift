@@ -12,7 +12,7 @@ public class StampedImage: Image, Stampable {
     override var type: Types { .StampedImage }
     var Stamp: OptionalNode?
     
-    init(stamp: Node) {
+    public init(stamp: Node) {
         let t = SKView().texture(from: stamp.__node__) ?? .init()
         super.init(t)
         
@@ -92,7 +92,7 @@ public class StampedImage: Image, Stampable {
         try super.encode(to: encoder)
     }
     
-    var physics: PhysicsImage {
+    public var physics: PhysicsImage {
         return PhysicsImage.init(self)
     }
     

@@ -96,8 +96,8 @@ public class Shape: Node, Polygonable {
                 points.append(CGPoint(x: x, y: y))
             }
         }
+        shape = SKShapeNode.init(path: path)
         super.init()
-        node = SKShapeNode.init(path: path)
         color = .white
         Points = points
         updateValues()
