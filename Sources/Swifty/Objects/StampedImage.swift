@@ -74,8 +74,9 @@ public class StampedImage: Image, Stampable {
         guard let top = topNode else { fatalError("") }
         let t = SKView().texture(from: top)
         __sprite__.texture = t
-        //return o
-        
+        textureSize = t?.size() ?? .zero
+        __width = Width?.value ?? textureSize.width
+        __height = Height?.value ?? textureSize.height
     }
     
     required init(from decoder: Decoder) throws {
