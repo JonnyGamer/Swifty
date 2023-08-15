@@ -27,19 +27,4 @@ extension Boxable {
         get { Get(Color, .white) }
         set { Set(&Color, .white, newValue, __sprite__, \.color) { $0.nsColor } }
     }
-    
-    public func keepInside(width: Double, height: Double) {
-        let Wmultiplier = width / self._width
-        let Hmultiplier = height / self._height
-        
-        let checkIfTOoTall = self._width * Hmultiplier
-        
-        if checkIfTOoTall > width {
-            self._width *= Wmultiplier
-            self._height *= Wmultiplier
-        } else {
-            self._width *= Hmultiplier
-            self._height *= Hmultiplier
-        }
-    }
 }

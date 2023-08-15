@@ -37,21 +37,6 @@ extension Imagable {
         get { Get(Height, textureSize.height) }
         set { Set(&Height, textureSize.height, newValue, __sprite__, \.size.height) }
     }
-    
-    public func keepInside(width: Double, height: Double) {
-        let Wmultiplier = width / self.__width
-        let Hmultiplier = height / self.__height
-        
-        let checkIfTOoTall = self.__width * Hmultiplier
-        
-        if checkIfTOoTall > width {
-            self.__width *= Wmultiplier
-            self.__height *= Wmultiplier
-        } else {
-            self.__width *= Hmultiplier
-            self.__height *= Hmultiplier
-        }
-    }
 }
 
 @objc protocol Stampable {

@@ -76,6 +76,21 @@ public class Image: Box, Imagable {
         try super.encode(to: encoder)
     }
 
+    override public func keepInside(width: Double, height: Double) {
+        let Wmultiplier = width / self.__width
+        let Hmultiplier = height / self.__height
+        
+        let checkIfTOoTall = self.__width * Hmultiplier
+        
+        if checkIfTOoTall > width {
+            self.__width *= Wmultiplier
+            self.__height *= Wmultiplier
+        } else {
+            self.__width *= Hmultiplier
+            self.__height *= Hmultiplier
+        }
+    }
+    
 }
 
 

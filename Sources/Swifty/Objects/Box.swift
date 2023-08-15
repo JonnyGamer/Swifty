@@ -60,6 +60,21 @@ public class Box: Node, Boxable {
         try super.encode(to: encoder)
     }
     
+    public func keepInside(width: Double, height: Double) {
+        let Wmultiplier = width / self._width
+        let Hmultiplier = height / self._height
+        
+        let checkIfTOoTall = self._width * Hmultiplier
+        
+        if checkIfTOoTall > width {
+            self._width *= Wmultiplier
+            self._height *= Wmultiplier
+        } else {
+            self._width *= Hmultiplier
+            self._height *= Hmultiplier
+        }
+    }
+    
 }
 
 //class PhysicsBox: Box, Physical {
