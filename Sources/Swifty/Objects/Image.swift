@@ -39,14 +39,16 @@ public class Image: Box, Imagable {
     
     public var image: String { get { _image } set { _image = newValue } }
     public var colorPercentage: Double { get { _colorPercentage } set { _colorPercentage = newValue } }
+    public override var width: Double { get { __width } set { __width = newValue } }
+    public override var height: Double { get { __height } set { __height = newValue } }
     
     private func updateValues() {
         let w = Width
         let h = Height
         image = image
         colorPercentage = colorPercentage
-        width = w?.value ?? _width
-        height = h?.value ?? _height
+        width = w?.value ?? width
+        height = h?.value ?? height
     }
     
     private enum CodingKeys: String, CodingKey {

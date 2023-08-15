@@ -20,8 +20,8 @@ extension Imagable {
             let t = SKTexture.init(imageNamed: $0)
             t.filteringMode = .nearest
             self.textureSize = t.size()
-            self._width = textureSize.width
-            self._height = textureSize.height
+            self.__width = textureSize.width
+            self.__height = textureSize.height
             return t
         } }
     }
@@ -29,11 +29,11 @@ extension Imagable {
         get { Get(ColorPercentage, 0.0) }
         set { Set(&ColorPercentage, 0.0, newValue, __sprite__, \.colorBlendFactor) { $0 / 100 } }
     }
-    var _width: Double {
+    var __width: Double {
         get { Get(Width, textureSize.width) }
         set { Set(&Width, textureSize.width, newValue, __sprite__, \.size.width) }
     }
-    var _height: Double {
+    var __height: Double {
         get { Get(Height, textureSize.height) }
         set { Set(&Height, textureSize.height, newValue, __sprite__, \.size.height) }
     }
