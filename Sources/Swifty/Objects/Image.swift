@@ -45,8 +45,8 @@ public class Image: Box, Imagable {
         let h = Height
         image = image
         colorPercentage = colorPercentage
-        width = w?.value ?? width
-        height = h?.value ?? height
+        width = w?.value ?? _width
+        height = h?.value ?? _height
     }
     
     private enum CodingKeys: String, CodingKey {
