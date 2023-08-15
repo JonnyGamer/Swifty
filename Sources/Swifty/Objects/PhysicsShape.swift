@@ -42,6 +42,9 @@ public class PhysicsShape: Shape, Physical {
     public func joint<SomePhysicsNode: PhysicsNode>(_ with: SomePhysicsNode) { _joint(with) }
     
     private func updateValues() {
+        if physics == nil {
+            physics = _points.map({ [Double($0.x), Double($0.y)] }).physicsBody()
+        }
         willFall = willFall
         canMove = canMove
         pinned = pinned

@@ -62,6 +62,9 @@ public class PhysicsImage: Image, PhysicsImagable {
     public func joint<SomePhysicsNode: PhysicsNode>(_ with: SomePhysicsNode) { _joint(with) }
     
     private func updateValues() {
+        if physics == nil {
+            physics = SKPhysicsBody.init(texture: __sprite__.texture!, size: CGSize.init(width: width, height: height))
+        }
         willFall = willFall
         canMove = canMove
         pinned = pinned

@@ -42,6 +42,9 @@ public class PhysicsCircle: Circle, Physical {
     public func joint<SomePhysicsNode: PhysicsNode>(_ with: SomePhysicsNode) { _joint(with) }
     
     private func updateValues() {
+        if physics == nil {
+            physics = SKPhysicsBody.init(circleOfRadius: _radius)
+        }
         willFall = willFall
         canMove = canMove
         pinned = pinned
