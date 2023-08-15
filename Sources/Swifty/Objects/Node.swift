@@ -14,7 +14,7 @@ public class Node: JSON, Nodable, Constructable, Equatable, Hashable {
         return lhs === rhs
     }
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(_encode(self))
+        hasher.combine(id)
     }
     
     private enum CodingKeys: String, CodingKey {
