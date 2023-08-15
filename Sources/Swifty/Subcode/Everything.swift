@@ -120,7 +120,7 @@ class Container: JSON, Equatable {
         case .Circle: self.object = try container.decode(Circle.self, forKey: .object)
         case .PhysicsCircle: self.object = try container.decode(PhysicsCircle.self, forKey: .object)
         case .Shape: self.object = try container.decode(Shape.self, forKey: .object)
-        case .PhysicsShape: self.object = try container.decode(Shape.self, forKey: .object)
+        case .PhysicsShape: self.object = try container.decode(PhysicsShape.self, forKey: .object)
         }
     }
 }
