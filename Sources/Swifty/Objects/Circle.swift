@@ -16,12 +16,13 @@ public class Circle: Node, Shapeable {
     public var __shape__: SKShapeNode { shape }
     
     private enum CodingKeys: String, CodingKey {
-        case Color
+        case Color, Radius
     }
     
     var Width: OptionalDouble?
     var Height: OptionalDouble?
     var Color: OptionalColor?
+    var Radius: OptionalDouble?
     
     public var color: Color { get { _color } set { _color = newValue } }
     
@@ -37,9 +38,13 @@ public class Circle: Node, Shapeable {
     }
     
     required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        Radius = try container.decodeIfPresent(OptionalDouble.self, forKey: .Radius)
+        shape = SKShapeNode.init(circleOfRadius: Radius?.value ?? 0.0)
         Color = try container.decodeIfPresent(OptionalColor.self, forKey: .Color)
+        
+        try super.init(from: decoder)
+        
         updateValues()
     }
     

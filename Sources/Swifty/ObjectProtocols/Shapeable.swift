@@ -11,6 +11,7 @@ import SpriteKit
 @objc protocol Shapeable: Nodable {
     var __shape__: SKShapeNode { get }
     var Color: OptionalColor? { get set }
+    var Radius: OptionalDouble? { get set }
 }
 extension Shapeable {
     var _color: Color {
@@ -19,6 +20,10 @@ extension Shapeable {
             Set(&Color, .white, newValue, __shape__, \.fillColor) { $0.nsColor }
             Set(&Color, .white, newValue, __shape__, \.strokeColor) { $0.nsColor }
         }
+    }
+    var _radius: Double {
+        get { Get(Radius, 0.0) }
+        set { Set(&Radius, 0.0, newValue) }
     }
 }
 
@@ -29,7 +34,6 @@ extension Shapeable {
     var Points: [CGPoint]? { get set }
     var Sides: OptionalInt? { get set }
     var Regular: OptionalBool? { get set }
-    var Radius: OptionalDouble? { get set }
 }
 extension Polygonable {
     var _points: [CGPoint] {
@@ -46,9 +50,5 @@ extension Polygonable {
     var _regular: Bool {
         get { Get(Regular, false) }
         set { Set(&Regular, false, newValue) }
-    }
-    var _radius: Double {
-        get { Get(Radius, 0.0) }
-        set { Set(&Radius, 0.0, newValue) }
     }
 }
