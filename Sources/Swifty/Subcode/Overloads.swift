@@ -8,14 +8,14 @@
 import Foundation
 
 // Operator Overloads (Make more generic ones)
-func +=(lhs: inout CGFloat, rhs: Int) {
+public func +=(lhs: inout CGFloat, rhs: Int) {
     lhs += CGFloat(rhs)
 }
-func +=(lhs: inout Double, rhs: Int) {
+public func +=(lhs: inout Double, rhs: Int) {
     lhs += Double(rhs)
 }
 
-extension BinaryFloatingPoint {
+public extension BinaryFloatingPoint {
     func toDegrees() -> Self {
         return self * 180 / .pi
     }
@@ -24,7 +24,7 @@ extension BinaryFloatingPoint {
     }
 }
 
-extension CGPoint {
+public extension CGPoint {
     func negative() -> Self {
         return .init(x: -x, y: -y)
     }
@@ -38,7 +38,7 @@ extension CGPoint {
         return .init(x: trueScene.size.width/2, y: trueScene.size.height/2)
     }
 }
-extension CGSize {
+public extension CGSize {
     static var screenSize: Self {
         return trueScene.size
     }
@@ -56,19 +56,19 @@ extension CGSize {
     }
 }
 
-func sin(_ d: Double) -> Double {
+public func sin(_ d: Double) -> Double {
     return Foundation.sin(d)
 }
-func cos(_ d: Double) -> Double {
+public func cos(_ d: Double) -> Double {
     return Foundation.cos(d)
 }
-func cot(_ d: Double) -> Double {
+public func cot(_ d: Double) -> Double {
     return 1/Foundation.tan(d)
 }
-func tan(_ d: Double) -> Double {
+public func tan(_ d: Double) -> Double {
     return Foundation.tan(d)
 }
-extension Hashable {
+public extension Hashable {
     var dup: Self {
         return self
     }
