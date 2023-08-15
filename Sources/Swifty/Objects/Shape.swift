@@ -48,6 +48,7 @@ public class Shape: Node, Polygonable {
             shape.path = path
         } else {
             Points = try container.decodeIfPresent([CGPoint].self, forKey: .Color)
+            shape.path = SKShapeNode.init(p: _points).path
         }
         
         updateValues()
