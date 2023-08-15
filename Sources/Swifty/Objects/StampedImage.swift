@@ -12,9 +12,9 @@ public class StampedImage: Image, Stampable {
     override var type: Types { .StampedImage }
     var Stamp: OptionalNode?
     
-    public init(stamp: Node) {
-        let t = SKView().texture(from: stamp.__node__)
-        super.init("")
+    init(stamp: Node) {
+        let t = SKView().texture(from: stamp.__node__) ?? .init()
+        super.init(t)
         
         let new = stamp.copy
         let focus: [Container] = [Container(new)] + new.allChildrenRecursive().map({ Container($0) })
@@ -22,8 +22,6 @@ public class StampedImage: Image, Stampable {
         for i in focus {
             Everything.removeNode(key: i.object.id)
         }
-        
-        __sprite__.texture = t
     }
     
     override public var image: String {
