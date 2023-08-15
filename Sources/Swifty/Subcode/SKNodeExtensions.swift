@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-extension SKNode {
+public extension SKNode {
     func removeFromParentRecursive() {
         removeFromParent()
         for i in children {
