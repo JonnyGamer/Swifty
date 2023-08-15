@@ -7,11 +7,14 @@
 
 import SpriteKit
 
-public class Node: JSON, Nodable, Constructable, Equatable {
+public class Node: JSON, Nodable, Constructable, Equatable, Hashable {
     
     // may or may not need this
     static public func == (lhs: Node, rhs: Node) -> Bool {
         return lhs === rhs
+    }
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(_encode(self))
     }
     
     private enum CodingKeys: String, CodingKey {
